@@ -38,36 +38,14 @@ export function CommitteesSection() {
           </p>
         </div>
 
-        <div className="space-y-8">
-          {committees.map((committee, idx) => (
-            <article key={idx} className="border-b-2 border-border pb-8 last:border-b-0 last:pb-0">
-              <div className="flex items-start justify-between mb-4">
-                <h3 className="font-serif text-3xl font-bold text-primary flex-1">
-                  {committee.name}
-                </h3>
-                <span className="inline-block ml-4 px-4 py-2 bg-primary text-card text-sm font-serif font-bold">
-                  {committee.difficulty}
-                </span>
-              </div>
-
-              <p className="font-serif text-lg font-semibold text-accent mb-3 italic">
-                Agenda: {committee.agenda}
-              </p>
-
-              <p className="font-serif text-lg leading-relaxed text-foreground mb-6">
-                {committee.description}
-              </p>
-
-              <button className="font-serif font-bold text-primary hover:text-accent transition-colors border-b-2 border-primary hover:border-accent pb-1">
-                Download Background Guide →
-              </button>
-            </article>
-          ))}
-        </div>
-
-        <div className="mt-12 pt-8 border-t-2 border-foreground">
-          <p className="font-serif text-center text-muted-foreground">
-            Each committee offers unique diplomatic challenges and opportunities for substantive engagement on global issues.
+        <div className="text-center py-16">
+          <div className="inline-block px-8 py-4 bg-accent text-card border-4 border-primary">
+            <p className="font-serif text-2xl md:text-3xl font-bold">
+              Announce Soon
+            </p>
+          </div>
+          <p className="font-serif text-lg text-muted-foreground mt-8 max-w-2xl mx-auto">
+            Committee details, agendas, and background guides will be announced shortly. Stay tuned for updates!
           </p>
         </div>
       </div>

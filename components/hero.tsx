@@ -9,7 +9,7 @@ export function Hero() {
         {/* Logo Display */}
         <div className="flex justify-center mb-6 sm:mb-8">
           <Image
-            src="/logo.svg"
+            src="/logo.png"
             alt="SYGNET Logo"
             width={100}
             height={100}

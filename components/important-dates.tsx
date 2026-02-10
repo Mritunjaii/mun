@@ -1,32 +1,4 @@
 export function ImportantDates() {
-  const dates = [
-    {
-      event: 'Registrations Open',
-      date: 'January 15, 2025',
-      description: 'Begin your journey to SYGNET MUN. Early registration discounts available.'
-    },
-    {
-      event: 'Early Bird Deadline',
-      date: 'February 28, 2025',
-      description: 'Last date for early bird registration with discounted fees.'
-    },
-    {
-      event: 'Regular Registration Deadline',
-      date: 'March 31, 2025',
-      description: 'Final deadline for regular registration at standard fees.'
-    },
-    {
-      event: 'Background Guide Release',
-      date: 'April 1, 2025',
-      description: 'Detailed background guides for all committees released for delegates.'
-    },
-    {
-      event: 'SYGNET MUN Conference',
-      date: 'May 10-12, 2025',
-      description: 'The main conference event - three days of intensive diplomatic simulation at NIT Hamirpur.'
-    }
-  ]
-
   return (
     <section className="py-16 md:py-24 bg-card border-b border-border">
       <div className="max-w-5xl mx-auto px-6">
@@ -39,27 +11,41 @@ export function ImportantDates() {
           </p>
         </div>
 
-        <div className="space-y-8">
-          {dates.map((item, idx) => (
-            <article key={idx} className="flex gap-8 border-b border-border pb-8 last:border-b-0 last:pb-0">
-              <div className="flex-shrink-0 pt-2">
-                <div className="w-3 h-3 bg-accent rounded-full"></div>
-              </div>
-              <div className="flex-1">
-                <div className="flex flex-col md:flex-row md:items-baseline md:justify-between gap-2 mb-2">
-                  <h3 className="font-serif text-2xl font-bold text-primary">
-                    {item.event}
-                  </h3>
-                  <span className="font-serif font-bold text-accent text-lg">
-                    {item.date}
-                  </span>
-                </div>
-                <p className="font-serif text-foreground leading-relaxed">
-                  {item.description}
-                </p>
-              </div>
-            </article>
-          ))}
+        {/* Announce Soon Banner */}
+        <div className="border-4 border-primary bg-background p-8 sm:p-12 md:p-16 text-center">
+          {/* Breaking News Banner */}
+          <div className="mb-6 sm:mb-8 pb-6 sm:pb-8 border-b-4 border-foreground">
+            <p className="font-serif text-xs sm:text-sm font-bold text-muted-foreground uppercase tracking-widest mb-2">
+              Breaking News
+            </p>
+            <h3 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-primary mb-4">
+              ANNOUNCE SOON
+            </h3>
+            <div className="flex justify-center gap-2 mt-4">
+              <div className="w-2 h-2 bg-accent rounded-full animate-pulse"></div>
+              <div className="w-2 h-2 bg-accent rounded-full animate-pulse delay-100"></div>
+              <div className="w-2 h-2 bg-accent rounded-full animate-pulse delay-200"></div>
+            </div>
+          </div>
+
+          {/* Message */}
+          <div className="space-y-4 sm:space-y-6">
+            <p className="font-serif text-base sm:text-lg md:text-xl text-foreground leading-relaxed">
+              Conference dates, registration deadlines, and key milestones will be announced shortly.
+            </p>
+            <p className="font-serif text-sm sm:text-base text-muted-foreground italic">
+              Mark your calendars and stay tuned for the official timeline.
+            </p>
+          </div>
+
+          {/* Decorative Element */}
+          <div className="mt-8 sm:mt-12 pt-8 sm:pt-12 border-t-2 border-foreground">
+            <div className="flex justify-center gap-2">
+              <div className="w-1 h-8 bg-primary"></div>
+              <div className="w-1 h-8 bg-accent"></div>
+              <div className="w-1 h-8 bg-primary"></div>
+            </div>
+          </div>
         </div>
 
         <div className="mt-12 pt-8 border-t-2 border-foreground">

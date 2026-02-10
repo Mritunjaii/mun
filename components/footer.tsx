@@ -50,14 +50,14 @@ export function Footer() {
             <div className="space-y-2 sm:space-y-3 font-serif text-xs sm:text-sm">
               <div>
                 <p className="font-bold">Email</p>
-                <a href="mailto:sygnetmun@nith.ac.in" className="hover:underline break-all">
-                  sygnetmun@nith.ac.in
+                <a href="mailto:themritunjai@gmail.com" className="hover:underline break-all">
+                  themritunjai@gmail.com
                 </a>
               </div>
               <div>
                 <p className="font-bold">Phone</p>
-                <a href="tel:+91-9876543210" className="hover:underline">
-                  +91-9876543210
+                <a href="tel:+91-7398337900" className="hover:underline">
+                  +91-7398337900
                 </a>
               </div>
             </div>
@@ -77,15 +77,15 @@ export function Footer() {
         {/* Social & Copyright */}
         <div className="flex flex-col items-center justify-center gap-4 sm:gap-6 md:flex-row md:justify-between">
           <div className="flex gap-3 sm:gap-4 flex-wrap justify-center">
-            <a href="#" className="text-card hover:text-accent transition-colors font-serif font-bold text-xs sm:text-sm">
+            {/* <a href="#" className="text-card hover:text-accent transition-colors font-serif font-bold text-xs sm:text-sm">
               Twitter
-            </a>
-            <a href="#" className="text-card hover:text-accent transition-colors font-serif font-bold text-xs sm:text-sm">
+            </a> */}
+            {/* <a href="https://www.instagram.com/sygnetmun/" className="text-card hover:text-accent transition-colors font-serif font-bold text-xs sm:text-sm">
               Instagram
-            </a>
-            <a href="#" className="text-card hover:text-accent transition-colors font-serif font-bold text-xs sm:text-sm">
+            </a> */}
+            {/* <a href="#" className="text-card hover:text-accent transition-colors font-serif font-bold text-xs sm:text-sm">
               Facebook
-            </a>
+            </a> */}
           </div>
           <p className="font-serif text-xs text-card/70 text-center md:text-right">
             © 2025 CSOC, NIT Hamirpur. All rights reserved.

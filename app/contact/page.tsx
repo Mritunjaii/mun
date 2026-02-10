@@ -54,7 +54,7 @@ export default function ContactPage() {
                 Email
               </h3>
               <p className="font-serif text-lg text-foreground mb-2">
-                sygnetmun@nith.ac.in
+                themritunjai@gmail.com
               </p>
               <p className="font-serif text-sm text-muted-foreground">
                 For general inquiries and registration support
@@ -67,7 +67,7 @@ export default function ContactPage() {
                 Phone
               </h3>
               <p className="font-serif text-lg text-foreground mb-2">
-                +91-9876543210
+                +91-7398337900
               </p>
               <p className="font-serif text-sm text-muted-foreground">
                 Available during business hours
@@ -111,7 +111,7 @@ export default function ContactPage() {
           </div>
 
           {/* Contact Form */}
-          <div className="mb-8 sm:mb-12 md:mb-16">
+          {/* <div className="mb-8 sm:mb-12 md:mb-16">
             <div className="mb-6 sm:mb-8 pb-6 sm:pb-8 border-b-2 border-foreground">
               <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-primary mb-1 sm:mb-2 text-balance">
                 Send us a Message
@@ -190,7 +190,7 @@ export default function ContactPage() {
                 Send Message
               </button>
             </form>
-          </div>
+          </div> */}
 
           {/* Social Media */}
           <div className="bg-card border-2 border-foreground p-8">
@@ -198,23 +198,23 @@ export default function ContactPage() {
               Connect on Social Media
             </h2>
             <div className="flex gap-6">
-              <a href="#" className="font-serif font-bold text-primary hover:text-accent transition-colors text-lg">
+              {/* <a href="#" className="font-serif font-bold text-primary hover:text-accent transition-colors text-lg">
                 Twitter / X
-              </a>
-              <a href="#" className="font-serif font-bold text-primary hover:text-accent transition-colors text-lg">
+              </a> */}
+              <a href="https://www.instagram.com/sygnetmun/" className="font-serif font-bold text-primary hover:text-accent transition-colors text-lg">
                 Instagram
               </a>
-              <a href="#" className="font-serif font-bold text-primary hover:text-accent transition-colors text-lg">
+              {/* <a href="#" className="font-serif font-bold text-primary hover:text-accent transition-colors text-lg">
                 Facebook
-              </a>
-              <a href="#" className="font-serif font-bold text-primary hover:text-accent transition-colors text-lg">
+              </a> */}
+              {/* <a href="#" className="font-serif font-bold text-primary hover:text-accent transition-colors text-lg">
                 LinkedIn
-              </a>
+              </a> */}
             </div>
           </div>
 
           {/* Additional Info */}
-          <div className="mt-16 pt-16 border-t-2 border-foreground">
+          {/* <div className="mt-16 pt-16 border-t-2 border-foreground">
             <div className="grid md:grid-cols-2 gap-8">
               <div>
                 <h3 className="font-serif text-2xl font-bold text-primary mb-4">
@@ -237,10 +237,10 @@ export default function ContactPage() {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
 
           {/* Map Placeholder */}
-          <div className="mt-16 pt-16 border-t-2 border-foreground">
+          {/* <div className="mt-16 pt-16 border-t-2 border-foreground">
             <h2 className="font-serif text-3xl font-bold text-primary mb-6">
               Venue Location
             </h2>
@@ -258,7 +258,7 @@ export default function ContactPage() {
                 Get Directions
               </button>
             </div>
-          </div>
+          </div> */}
         </div>
       </section>
 

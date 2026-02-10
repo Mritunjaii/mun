@@ -36,27 +36,62 @@ export default function ResourcesPage() {
 
             <div className="space-y-3 sm:space-y-4">
               {[
-                { committee: 'UN Security Council', size: '45 pages', status: 'Available' },
-                { committee: 'UN General Assembly', size: '52 pages', status: 'Available' },
-                { committee: 'ECOSOC', size: '38 pages', status: 'Available' },
-                { committee: 'Human Rights Council', size: '41 pages', status: 'Available' }
+                {
+                  committee: 'UN Security Council',
+                  size: 'External Resources',
+                  links: [
+                    { label: 'Wikipedia', url: 'https://en.wikipedia.org/wiki/United_Nations_Security_Council' },
+                    { label: 'UN Official', url: 'https://www.un.org/securitycouncil/' }
+                  ]
+                },
+                {
+                  committee: 'UN General Assembly',
+                  size: 'External Resources',
+                  links: [
+                    { label: 'Wikipedia', url: 'https://en.wikipedia.org/wiki/United_Nations_General_Assembly' },
+                    { label: 'UN Official', url: 'https://www.un.org/en/ga/' }
+                  ]
+                },
+                {
+                  committee: 'ECOSOC',
+                  size: 'External Resources',
+                  links: [
+                    { label: 'Wikipedia', url: 'https://en.wikipedia.org/wiki/United_Nations_Economic_and_Social_Council' },
+                    { label: 'UN Official', url: 'https://www.un.org/ecosoc/en/' }
+                  ]
+                },
+                {
+                  committee: 'Human Rights Council',
+                  size: 'External Resources',
+                  links: [
+                    { label: 'Wikipedia', url: 'https://en.wikipedia.org/wiki/United_Nations_Human_Rights_Council' },
+                    { label: 'UN Official', url: 'https://www.ohchr.org/en/hr-bodies/hrc/home' }
+                  ]
+                }
               ].map((guide, idx) => (
-                <div key={idx} className="border-l-4 border-accent bg-card p-3 sm:p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
-                  <div className="min-w-0">
-                    <h3 className="font-serif text-sm sm:text-base md:text-lg font-bold text-primary">
-                      {guide.committee}
-                    </h3>
-                    <p className="font-serif text-xs sm:text-sm text-muted-foreground">
-                      {guide.size}
-                    </p>
+                <div key={idx} className="border-l-4 border-accent bg-card p-3 sm:p-4">
+                  <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 sm:gap-4 mb-3">
+                    <div className="min-w-0">
+                      <h3 className="font-serif text-sm sm:text-base md:text-lg font-bold text-primary">
+                        {guide.committee}
+                      </h3>
+                      <p className="font-serif text-xs sm:text-sm text-muted-foreground">
+                        {guide.size}
+                      </p>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-2 sm:gap-3 sm:flex-shrink-0">
-                    <span className="inline-block px-2 sm:px-3 py-1 bg-primary text-card text-xs font-serif font-bold">
-                      {guide.status}
-                    </span>
-                    <button className="font-serif font-bold text-xs sm:text-sm text-primary hover:text-accent transition-colors border-b-2 border-primary hover:border-accent">
-                      Download →
-                    </button>
+                  <div className="flex flex-wrap gap-2">
+                    {guide.links.map((link, linkIdx) => (
+                      <a
+                        key={linkIdx}
+                        href={link.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-block px-3 py-1 bg-primary text-card hover:bg-accent hover:text-primary transition-colors font-serif font-bold text-xs"
+                      >
+                        {link.label} →
+                      </a>
+                    ))}
                   </div>
                 </div>
               ))}
@@ -103,9 +138,27 @@ export default function ResourcesPage() {
               </div>
 
               <div className="mt-4 sm:mt-6 pt-4 sm:pt-6 border-t-2 border-foreground">
-                <button className="font-serif font-bold py-2 sm:py-3 px-4 sm:px-6 text-sm sm:text-base bg-primary text-card hover:bg-accent hover:text-primary transition-colors">
-                  Download Full Code of Conduct (PDF)
-                </button>
+                <div className="space-y-2">
+                  <p className="font-serif text-sm text-muted-foreground mb-3">External Resources:</p>
+                  <div className="flex flex-wrap gap-3">
+                    <a
+                      href="https://en.wikipedia.org/wiki/Model_United_Nations#Rules_of_procedure"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-block px-4 py-2 bg-primary text-card hover:bg-accent hover:text-primary transition-colors font-serif font-bold text-sm"
+                    >
+                      Wikipedia: MUN Rules →
+                    </a>
+                    <a
+                      href="https://www.un.org/en/model-united-nations"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-block px-4 py-2 bg-primary text-card hover:bg-accent hover:text-primary transition-colors font-serif font-bold text-sm"
+                    >
+                      UN: Model UN →
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
           </article>
@@ -129,9 +182,24 @@ export default function ResourcesPage() {
                 <p className="font-serif text-foreground mb-4">
                   Introduction to key concepts in international relations, diplomacy, and global governance.
                 </p>
-                <button className="font-serif font-bold text-primary hover:text-accent transition-colors border-b border-primary hover:border-accent">
-                  Access Resource →
-                </button>
+                <div className="space-y-2">
+                  <a
+                    href="https://en.wikipedia.org/wiki/International_relations"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block font-serif font-bold text-sm text-primary hover:text-accent transition-colors border-b border-primary hover:border-accent w-fit"
+                  >
+                    Wikipedia: International Relations →
+                  </a>
+                  <a
+                    href="https://www.un.org/en/about-us"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block font-serif font-bold text-sm text-primary hover:text-accent transition-colors border-b border-primary hover:border-accent w-fit"
+                  >
+                    UN Official: About the UN →
+                  </a>
+                </div>
               </div>
 
               <div className="bg-card border-l-4 border-accent p-6">
@@ -141,9 +209,24 @@ export default function ResourcesPage() {
                 <p className="font-serif text-foreground mb-4">
                   Step-by-step guide to drafting effective UN resolutions with proper formatting and language.
                 </p>
-                <button className="font-serif font-bold text-primary hover:text-accent transition-colors border-b border-primary hover:border-accent">
-                  Access Resource →
-                </button>
+                <div className="space-y-2">
+                  <a
+                    href="https://en.wikipedia.org/wiki/United_Nations_resolution"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block font-serif font-bold text-sm text-primary hover:text-accent transition-colors border-b border-primary hover:border-accent w-fit"
+                  >
+                    Wikipedia: UN Resolutions →
+                  </a>
+                  <a
+                    href="https://www.un.org/en/ga/about/ropga/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block font-serif font-bold text-sm text-primary hover:text-accent transition-colors border-b border-primary hover:border-accent w-fit"
+                  >
+                    UN: Rules of Procedure →
+                  </a>
+                </div>
               </div>
 
               <div className="bg-card border-l-4 border-accent p-6">
@@ -153,9 +236,24 @@ export default function ResourcesPage() {
                 <p className="font-serif text-foreground mb-4">
                   Comprehensive profiles of UN member states including voting records, key policies, and allies.
                 </p>
-                <button className="font-serif font-bold text-primary hover:text-accent transition-colors border-b border-primary hover:border-accent">
-                  Access Resource →
-                </button>
+                <div className="space-y-2">
+                  <a
+                    href="https://en.wikipedia.org/wiki/Member_states_of_the_United_Nations"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block font-serif font-bold text-sm text-primary hover:text-accent transition-colors border-b border-primary hover:border-accent w-fit"
+                  >
+                    Wikipedia: UN Member States →
+                  </a>
+                  <a
+                    href="https://www.un.org/en/about-us/member-states"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block font-serif font-bold text-sm text-primary hover:text-accent transition-colors border-b border-primary hover:border-accent w-fit"
+                  >
+                    UN Official: Member States →
+                  </a>
+                </div>
               </div>
 
               <div className="bg-card border-l-4 border-accent p-6">
@@ -165,9 +263,24 @@ export default function ResourcesPage() {
                 <p className="font-serif text-foreground mb-4">
                   Best practices for effective speeches, responses, and point of order interventions.
                 </p>
-                <button className="font-serif font-bold text-primary hover:text-accent transition-colors border-b border-primary hover:border-accent">
-                  Access Resource →
-                </button>
+                <div className="space-y-2">
+                  <a
+                    href="https://en.wikipedia.org/wiki/Model_United_Nations"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block font-serif font-bold text-sm text-primary hover:text-accent transition-colors border-b border-primary hover:border-accent w-fit"
+                  >
+                    Wikipedia: Model UN →
+                  </a>
+                  <a
+                    href="https://www.un.org/en/delegate/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block font-serif font-bold text-sm text-primary hover:text-accent transition-colors border-b border-primary hover:border-accent w-fit"
+                  >
+                    UN: Delegate Resources →
+                  </a>
+                </div>
               </div>
             </div>
           </article>
@@ -192,9 +305,27 @@ export default function ResourcesPage() {
                   Each committee has a specific agenda document that outlines the particular rules and procedures for that committee. These are included in the individual background guides.
                 </p>
                 <div className="mt-6 pt-6 border-t border-card/30">
-                  <button className="font-serif font-bold py-3 px-6 bg-card text-primary hover:bg-accent hover:text-card transition-colors">
-                    Download Rules of Procedure
-                  </button>
+                  <div className="space-y-3">
+                    <p className="font-serif text-sm text-card/80">External Resources:</p>
+                    <div className="flex flex-wrap gap-3">
+                      <a
+                        href="https://en.wikipedia.org/wiki/United_Nations_General_Assembly#Rules_of_procedure"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-block px-4 py-2 bg-card text-primary hover:bg-accent hover:text-card transition-colors font-serif font-bold text-sm"
+                      >
+                        Wikipedia: UN Procedure →
+                      </a>
+                      <a
+                        href="https://www.un.org/en/ga/about/ropga/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-block px-4 py-2 bg-card text-primary hover:bg-accent hover:text-card transition-colors font-serif font-bold text-sm"
+                      >
+                        UN: Rules of Procedure →
+                      </a>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

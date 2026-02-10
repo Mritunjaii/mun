@@ -14,15 +14,15 @@ export function Navigation() {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
             <Image
-              src="/logo.svg"
+              src="/logo.png"
               alt="SYGNET Logo"
               width={40}
               height={40}
-              className="w-8 h-8 sm:w-10 sm:h-10"
+              className="w-16 h-16 sm:w-15 sm:h-15"
             />
-            <span className="hidden sm:inline font-serif text-sm sm:text-base font-bold text-primary">
+            {/* <span className="hidden sm:inline font-serif text-sm sm:text-base font-bold text-primary">
               THE CSOC CHRONICLE
-            </span>
+            </span> */}
           </Link>
 
           {/* Mobile Menu Button */}
@@ -43,7 +43,7 @@ export function Navigation() {
 
           {/* Desktop Navigation */}
           <div className="hidden sm:flex gap-4 md:gap-8 text-xs md:text-sm font-serif">
-            <Link href="#what-is-mun" className="text-foreground hover:text-accent transition-colors">
+            <Link href="/#what-is-mun" className="text-foreground hover:text-accent transition-colors">
               About MUN
             </Link>
             <Link href="/committees" className="text-foreground hover:text-accent transition-colors">
