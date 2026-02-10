@@ -72,6 +72,7 @@ export function Footer() {
           <p className="font-serif text-xs text-center text-card/70">
             "Voices That Shape Tomorrow" — Maiden Edition, 2025
           </p>
+          <p className="font-serif text-xs text-center text-card/70">Designed & Developed by <a href="https://www.linkedin.com/in/mritunjai-gupta/" className="text-card hover:text-accent transition-colors">Mritunjai Gupta</a></p>
         </div>
 
         {/* Social & Copyright */}
