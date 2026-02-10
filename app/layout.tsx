@@ -4,12 +4,12 @@ import { Playfair_Display, Merriweather } from 'next/font/google'
 
 import './globals.css'
 
-const playfair = Playfair_Display({ 
+const playfair = Playfair_Display({
   subsets: ['latin'],
   variable: '--font-playfair',
   weight: ['400', '500', '600', '700', '800', '900']
 })
-const merriweather = Merriweather({ 
+const merriweather = Merriweather({
   subsets: ['latin'],
   variable: '--font-merriweather',
   weight: ['400', '700']
@@ -17,8 +17,7 @@ const merriweather = Merriweather({
 
 export const metadata: Metadata = {
   title: 'SYGNET MUN - The CSOC Chronicle',
-  description: 'Voices That Shape Tomorrow - Model United Nations by CSOC, NIT Hamirpur',
-  generator: 'v0.app',
+  description: 'Voices That Shape Tomorrow - Model United Nations by CSOC, NIT Hamirpur'
 }
 
 export default function RootLayout({
