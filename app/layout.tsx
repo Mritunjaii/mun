@@ -1,6 +1,7 @@
 import React from "react"
 import type { Metadata } from 'next'
 import { Playfair_Display, Merriweather } from 'next/font/google'
+import { AuthProvider } from '@/lib/auth-context'
 
 import './globals.css'
 
@@ -27,7 +28,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${playfair.variable} ${merriweather.variable}`}>
-      <body className="font-serif antialiased">{children}</body>
+      <body className="font-serif antialiased">
+        <AuthProvider>
+          {children}
+        </AuthProvider>
+      </body>
     </html>
   )
 }

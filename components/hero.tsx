@@ -1,6 +1,8 @@
 'use client'
 
 import Image from 'next/image'
+import Link from 'next/link'
+import { Button } from '@/components/ui/button'
 
 export function Hero() {
   return (
@@ -56,6 +58,18 @@ export function Hero() {
           <div className="w-1 h-6 sm:h-8 bg-primary"></div>
           <div className="w-1 h-6 sm:h-8 bg-accent"></div>
           <div className="w-1 h-6 sm:h-8 bg-primary"></div>
+        </div>
+
+        {/* Register Now Button */}
+        <div className="flex justify-center mt-8 sm:mt-10">
+          <Link href="/register">
+            <Button
+              size="lg"
+              className="font-serif text-base sm:text-lg px-8 sm:px-12 py-4 sm:py-6 bg-accent hover:bg-accent/90 text-accent-foreground shadow-lg hover:shadow-xl transition-all duration-300"
+            >
+              Register Now
+            </Button>
+          </Link>
         </div>
       </div>
     </section>

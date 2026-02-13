@@ -3,9 +3,11 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { useState } from 'react'
+import { useAuth } from '@/lib/auth-context'
 
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false)
+  const { isAuthenticated, logout } = useAuth()
 
   return (
     <nav className="border-b border-border bg-card sticky top-0 z-50">
@@ -52,8 +54,8 @@ export function Navigation() {
             <Link href="/secretariat" className="text-foreground hover:text-accent transition-colors">
               Secretariat
             </Link>
-            <Link href="/registration" className="text-foreground hover:text-accent transition-colors">
-              Register
+            <Link href="/blogs" className="text-foreground hover:text-accent transition-colors">
+              Blogs
             </Link>
             <Link href="/resources" className="text-foreground hover:text-accent transition-colors">
               Resources
@@ -61,6 +63,25 @@ export function Navigation() {
             <Link href="/contact" className="text-foreground hover:text-accent transition-colors">
               Contact
             </Link>
+            {isAuthenticated ? (
+              <>
+                <Link href="/dashboard" className="text-foreground hover:text-accent transition-colors">
+                  Dashboard
+                </Link>
+                <button onClick={logout} className="text-foreground hover:text-accent transition-colors">
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <Link href="/login" className="text-foreground hover:text-accent transition-colors">
+                  Login
+                </Link>
+                <Link href="/register" className="text-foreground hover:text-accent transition-colors">
+                  Register
+                </Link>
+              </>
+            )}
           </div>
         </div>
 
@@ -89,11 +110,11 @@ export function Navigation() {
               Secretariat
             </Link>
             <Link
-              href="/registration"
+              href="/blogs"
               className="text-foreground hover:text-accent transition-colors"
               onClick={() => setIsOpen(false)}
             >
-              Register
+              Blogs
             </Link>
             <Link
               href="/resources"
@@ -109,6 +130,43 @@ export function Navigation() {
             >
               Contact
             </Link>
+            {isAuthenticated ? (
+              <>
+                <Link
+                  href="/dashboard"
+                  className="text-foreground hover:text-accent transition-colors"
+                  onClick={() => setIsOpen(false)}
+                >
+                  Dashboard
+                </Link>
+                <button
+                  onClick={() => {
+                    logout()
+                    setIsOpen(false)
+                  }}
+                  className="text-foreground hover:text-accent transition-colors text-left"
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  href="/login"
+                  className="text-foreground hover:text-accent transition-colors"
+                  onClick={() => setIsOpen(false)}
+                >
+                  Login
+                </Link>
+                <Link
+                  href="/register"
+                  className="text-foreground hover:text-accent transition-colors"
+                  onClick={() => setIsOpen(false)}
+                >
+                  Register
+                </Link>
+              </>
+            )}
           </div>
         )}
       </div>
