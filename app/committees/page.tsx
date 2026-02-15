@@ -1,9 +1,57 @@
 'use client'
 
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { Navigation } from '@/components/navigation'
 import { Footer } from '@/components/footer'
+import { committeeAPI } from '@/lib/api'
+import { useAuth } from '@/lib/auth-context'
+import type { Committee } from '@/lib/types'
+import { Button } from '@/components/ui/button'
+import { Download, Users } from 'lucide-react'
 
 export default function CommitteesPage() {
+  const router = useRouter()
+  const { isAuthenticated } = useAuth()
+  const [committees, setCommittees] = useState<Committee[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState('')
+
+  useEffect(() => {
+    const fetchCommittees = async () => {
+      setLoading(true)
+      const response = await committeeAPI.getAllCommittees()
+
+      if (response.success && response.data) {
+        setCommittees(response.data)
+        setError('')
+      } else {
+        setError(response.error?.message || 'Failed to load committees')
+      }
+
+      setLoading(false)
+    }
+
+    fetchCommittees()
+  }, [])
+
+  const handleRegisterClick = () => {
+    if (isAuthenticated) {
+      router.push('/dashboard')
+    } else {
+      router.push('/register')
+    }
+  }
+
+  const getAcronym = (name: string): string => {
+    const acronyms: { [key: string]: string } = {
+      'Lok Sabha': 'LOKSABHA',
+      'UNEA': 'UNEA',
+      'UNHRC': 'UNHRC'
+    }
+    return acronyms[name] || name.toUpperCase()
+  }
+
   return (
     <main className="min-h-screen bg-background text-foreground">
       <Navigation />
@@ -20,47 +68,133 @@ export default function CommitteesPage() {
         </div>
       </section>
 
-      {/* Announce Soon Section */}
-      <section className="py-16 sm:py-24 md:py-32 lg:py-40 bg-background">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6">
-          <div className="border-4 border-primary bg-card p-8 sm:p-12 md:p-16 text-center">
-            {/* Breaking News Banner */}
-            <div className="mb-6 sm:mb-8 pb-6 sm:pb-8 border-b-4 border-foreground">
-              <p className="font-serif text-xs sm:text-sm font-bold text-muted-foreground uppercase tracking-widest mb-2">
-                Breaking News
-              </p>
-              <h2 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-primary mb-4">
-                ANNOUNCE SOON
-              </h2>
-              <div className="flex justify-center gap-2 mt-4">
-                <div className="w-2 h-2 bg-accent rounded-full animate-pulse"></div>
-                <div className="w-2 h-2 bg-accent rounded-full animate-pulse delay-100"></div>
-                <div className="w-2 h-2 bg-accent rounded-full animate-pulse delay-200"></div>
-              </div>
+      {/* Committees Section */}
+      <section className="py-12 sm:py-16 md:py-20 bg-background">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+          {loading ? (
+            <div className="text-center py-20">
+              <div className="inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-primary border-r-transparent"></div>
+              <p className="mt-4 text-muted-foreground">Loading committees...</p>
             </div>
+          ) : error ? (
+            <div className="bg-destructive/10 border border-destructive text-destructive px-6 py-4 rounded-lg text-center">
+              <p className="font-semibold">Error loading committees</p>
+              <p className="text-sm mt-1">{error}</p>
+            </div>
+          ) : (
+            <div className="space-y-16">
+              {committees.map((committee, index) => (
+                <div
+                  key={committee._id}
+                  className="border-t-4 border-foreground pt-8"
+                >
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    {/* Main Content */}
+                    <div className="lg:col-span-2 space-y-6">
+                      {/* Committee Name */}
+                      <div>
+                        <div className="flex items-center gap-3 mb-2">
+                          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-foreground">
+                            {committee.name}
+                          </h2>
+                          {committee.doubleDelegationAllowed && (
+                            <span className="inline-block px-2 py-1 bg-primary/10 border border-primary rounded text-xs font-semibold text-primary">
+                              Double Delegation
+                            </span>
+                          )}
+                        </div>
+                        <p className="font-serif text-sm text-muted-foreground uppercase tracking-wider">
+                          {getAcronym(committee.name)}
+                        </p>
+                      </div>
 
-            {/* Message */}
-            <div className="space-y-4 sm:space-y-6">
-              <p className="font-serif text-lg sm:text-xl md:text-2xl text-foreground leading-relaxed">
-                Committee details, agendas, and background guides are currently being finalized by our editorial board.
-              </p>
-              <p className="font-serif text-base sm:text-lg text-muted-foreground italic">
-                Stay tuned for the official announcement of all participating committees and their respective agendas.
-              </p>
-            </div>
+                      {/* Description */}
+                      <div className="border-l-4 border-primary pl-4">
+                        <p className="font-serif text-sm text-muted-foreground uppercase tracking-wider mb-2">
+                          Committee Overview
+                        </p>
+                        <p className="text-foreground leading-relaxed">
+                          {committee.description}
+                        </p>
+                      </div>
 
-            {/* Decorative Element */}
-            <div className="mt-8 sm:mt-12 pt-8 sm:pt-12 border-t-2 border-foreground">
-              <div className="flex justify-center gap-2">
-                <div className="w-1 h-8 bg-primary"></div>
-                <div className="w-1 h-8 bg-accent"></div>
-                <div className="w-1 h-8 bg-primary"></div>
-              </div>
-              <p className="font-serif text-sm text-muted-foreground mt-6">
-                For updates, follow our official channels or contact the Secretariat
-              </p>
+                      {/* Agenda/Discussion Topics */}
+                      <div>
+                        <h3 className="font-serif text-xl font-bold text-foreground mb-3">
+                          Discussion Topics
+                        </h3>
+                        <p className="text-foreground leading-relaxed">
+                          {committee.agenda}
+                        </p>
+                      </div>
+
+                      {/* Rules of Procedure */}
+                      {committee.rulesOfProcedure && (
+                        <div className="bg-card border border-border p-4 rounded">
+                          <p className="text-sm text-muted-foreground">
+                            <span className="font-semibold">Rules of Procedure:</span>{' '}
+                            {committee.rulesOfProcedure}
+                          </p>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Sidebar */}
+                    <div className="space-y-4">
+
+                      {/* Committee Size */}
+                      <div className="bg-card border-2 border-foreground p-4">
+                        <p className="font-serif text-xs text-muted-foreground uppercase tracking-wider mb-1">
+                          Committee Size
+                        </p>
+                        <div className="flex items-center gap-2">
+                          <Users className="h-5 w-5 text-primary" />
+                          <p className="font-serif text-xl font-bold text-foreground">
+                            {committee.maxDelegates} Delegates
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Download Button */}
+                      <Button
+                        asChild
+                        className="w-full bg-foreground text-background hover:bg-foreground/90"
+                      >
+                        <a
+                          href={committee.brochureUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center justify-center gap-2"
+                        >
+                          <Download className="h-4 w-4" />
+                          Download Background Guide
+                        </a>
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
-          </div>
+          )}
+        </div>
+      </section>
+
+      {/* Call to Action */}
+      <section className="py-16 bg-card border-t-4 border-primary">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+          <h2 className="font-serif text-3xl sm:text-4xl font-bold text-foreground mb-4">
+            Ready to Join a Committee?
+          </h2>
+          <p className="text-muted-foreground mb-8">
+            Register now and select your preferred committee for SYGNET MUN
+          </p>
+          <Button
+            onClick={handleRegisterClick}
+            size="lg"
+            className="bg-primary text-primary-foreground hover:bg-primary/90"
+          >
+            Register as Delegate
+          </Button>
         </div>
       </section>
 

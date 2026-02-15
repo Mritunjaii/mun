@@ -12,6 +12,8 @@ export interface User {
     countryPreference: CountryPreference[]
     paymentStatus: 'Pending' | 'Completed' | 'Failed' | 'Refunded' | 'Cancelled'
     amountPaid: number
+    amountReciptUrl?: string
+    accommodationPreference?: 'with_stay' | 'without_stay'
     committeeChoose?: string
     countryAssigned?: string
     createdAt: string
@@ -46,6 +48,35 @@ export interface ApiResponse<T> {
 export interface AuthResponse {
     message: string
     user: User
+    token: string
+}
+
+export interface Country {
+    _id: string
+    committeeId: string
+    name: string
+    code: string
+    blocOrParty: string
+    isAvailable: boolean
+    createdAt: string
+    updatedAt: string
+}
+
+export interface CommitteeRegistrationRequest {
+    committeeChoose: string
+    countryPreference: CountryPreference[]
+    doubleDelegationName?: string
+    doubleDelegationPhoneNumber?: string
+    doubleDelegationCountryPreference?: CountryPreference[]
+}
+
+export type AccommodationOption = 'with_stay' | 'without_stay'
+
+export interface PaymentStatusUpdate {
+    paymentStatus: 'Completed' | 'Failed'
+    amountPaid: number
+    amountReciptUrl: string
+    accommodationPreference?: AccommodationOption
 }
 
 export interface SendOTPRequest {
@@ -69,4 +100,20 @@ export interface SignupRequest {
 export interface LoginRequest {
     emailOrPhone: string
     password: string
+}
+
+export interface Committee {
+    _id: string
+    name: string
+    description: string
+    agenda: string
+    maxDelegates: number
+    rulesOfProcedure: string
+    doubleDelegationAllowed: boolean
+    entryFee: number
+    entryFeeOutsideNitWithStay: number
+    entryFeeOutsideNitWithoutStay: number
+    brochureUrl: string
+    createdAt: string
+    updatedAt: string
 }

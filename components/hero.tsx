@@ -2,9 +2,23 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
+import { useAuth } from '@/lib/auth-context'
 
 export function Hero() {
+  const router = useRouter()
+  const { isAuthenticated } = useAuth()
+
+  const handleRegisterClick = (e: React.MouseEvent) => {
+    e.preventDefault()
+    if (isAuthenticated) {
+      router.push('/dashboard')
+    } else {
+      router.push('/register')
+    }
+  }
+
   return (
     <section className="bg-card py-8 sm:py-12 md:py-16 lg:py-24 border-b-4 border-primary">
       <div className="max-w-5xl mx-auto px-4 sm:px-6">
@@ -62,14 +76,13 @@ export function Hero() {
 
         {/* Register Now Button */}
         <div className="flex justify-center mt-8 sm:mt-10">
-          <Link href="/register">
-            <Button
-              size="lg"
-              className="font-serif text-base sm:text-lg px-8 sm:px-12 py-4 sm:py-6 bg-accent hover:bg-accent/90 text-accent-foreground shadow-lg hover:shadow-xl transition-all duration-300"
-            >
-              Register Now
-            </Button>
-          </Link>
+          <Button
+            onClick={handleRegisterClick}
+            size="lg"
+            className="font-serif text-base sm:text-lg px-8 sm:px-12 py-4 sm:py-6 bg-accent hover:bg-accent/90 text-accent-foreground shadow-lg hover:shadow-xl transition-all duration-300"
+          >
+            Register Now
+          </Button>
         </div>
       </div>
     </section>

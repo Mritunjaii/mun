@@ -34,8 +34,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
             if (response.success && response.data) {
                 const userData = response.data.user
+                const token = response.data.token
                 setUser(userData)
                 userStorage.saveUser(userData)
+                userStorage.saveToken(token)
                 return { success: true }
             } else {
                 return {
@@ -57,8 +59,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
             if (response.success && response.data) {
                 const userData = response.data.user
+                const token = response.data.token
                 setUser(userData)
                 userStorage.saveUser(userData)
+                userStorage.saveToken(token)
                 return { success: true }
             } else {
                 return {
@@ -77,6 +81,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const logout = () => {
         setUser(null)
         userStorage.removeUser()
+        userStorage.removeToken()
     }
 
     return (

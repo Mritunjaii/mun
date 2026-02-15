@@ -16,6 +16,13 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select'
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+} from '@/components/ui/dialog'
 import { Navigation } from '@/components/navigation'
 import { Footer } from '@/components/footer'
 
@@ -23,16 +30,8 @@ export default function RegisterPage() {
     const router = useRouter()
     const { signup } = useAuth()
 
-    // Step management
-    const [step, setStep] = useState<1 | 2>(1)
-
-    // Step 1: Email & OTP
+    // Form fields
     const [email, setEmail] = useState('')
-    const [otp, setOtp] = useState('')
-    const [otpSent, setOtpSent] = useState(false)
-    const [otpLoading, setOtpLoading] = useState(false)
-
-    // Step 2: Registration form
     const [name, setName] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
@@ -43,32 +42,81 @@ export default function RegisterPage() {
     const [phoneNumber, setPhoneNumber] = useState('')
     const [munExperience, setMunExperience] = useState('0')
 
+    // OTP states
+    const [otp, setOtp] = useState('')
+    const [otpSent, setOtpSent] = useState(false)
+    const [showOtpDialog, setShowOtpDialog] = useState(false)
+    const [otpLoading, setOtpLoading] = useState(false)
+
     // Error and loading states
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
 
+    const validateEmail = (email: string, institution: string) => {
+        if (institution === 'NIT Hamirpur') {
+            return email.endsWith('@nith.ac.in')
+        }
+        return true
+    }
+
+    const scrollToTop = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+
     const handleSendOTP = async () => {
-        if (!email) {
-            setError('Please enter your email')
+        setError('')
+
+        // Validate all required fields
+        if (!name || !email || !password || !confirmPassword || !classYear || !age || !phoneNumber) {
+            setError('Please fill in all required fields')
+            scrollToTop()
+            return
+        }
+
+        if (password !== confirmPassword) {
+            setError('Passwords do not match')
+            scrollToTop()
+            return
+        }
+
+        if (password.length < 6) {
+            setError('Password must be at least 6 characters')
+            scrollToTop()
+            return
+        }
+
+        if (institutionType === 'other' && !otherInstitution) {
+            setError('Please enter your institution name')
+            scrollToTop()
+            return
+        }
+
+        const institution = institutionType === 'nit' ? 'NIT Hamirpur' : otherInstitution
+
+        // Validate email domain for NIT Hamirpur
+        if (!validateEmail(email, institution)) {
+            setError('For NIT Hamirpur, email must end with @nith.ac.in')
+            scrollToTop()
             return
         }
 
         setOtpLoading(true)
-        setError('')
 
         const response = await authAPI.sendOTP({ email })
 
         if (response.success) {
             setOtpSent(true)
+            setShowOtpDialog(true)
             setError('')
         } else {
             setError(response.error?.message || 'Failed to send OTP')
+            scrollToTop()
         }
 
         setOtpLoading(false)
     }
 
-    const handleVerifyOTP = () => {
+    const handleVerifyOTP = async () => {
         if (!otp) {
             setError('Please enter the OTP')
             return
@@ -80,37 +128,10 @@ export default function RegisterPage() {
         }
 
         setError('')
-        setStep(2)
-    }
-
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault()
-        setError('')
-
-        // Validation
-        if (!name || !password || !confirmPassword || !classYear || !age || !phoneNumber) {
-            setError('Please fill in all required fields')
-            return
-        }
-
-        if (password !== confirmPassword) {
-            setError('Passwords do not match')
-            return
-        }
-
-        if (password.length < 6) {
-            setError('Password must be at least 6 characters')
-            return
-        }
-
-        if (institutionType === 'other' && !otherInstitution) {
-            setError('Please enter your institution name')
-            return
-        }
+        setShowOtpDialog(false)
+        setLoading(true)
 
         const institution = institutionType === 'nit' ? 'NIT Hamirpur' : otherInstitution
-
-        setLoading(true)
 
         const result = await signup({
             email,
@@ -128,9 +149,14 @@ export default function RegisterPage() {
             router.push('/dashboard')
         } else {
             setError(result.error || 'Registration failed')
+            scrollToTop()
+            setLoading(false)
         }
+    }
 
-        setLoading(false)
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault()
+        // Form submission is now handled by Send OTP button
     }
 
     return (
@@ -143,7 +169,7 @@ export default function RegisterPage() {
                         Register for SYGNET MUN
                     </h1>
                     <p className="text-center text-muted-foreground mb-8">
-                        {step === 1 ? 'Verify your email to get started' : 'Complete your registration'}
+                        Complete your registration details
                     </p>
 
                     {error && (
@@ -152,222 +178,168 @@ export default function RegisterPage() {
                         </div>
                     )}
 
-                    {step === 1 ? (
-                        <div className="space-y-6">
-                            <div>
-                                <Label htmlFor="email">Email Address</Label>
-                                <Input
-                                    id="email"
-                                    type="email"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    placeholder="your.email@example.com"
-                                    disabled={otpSent}
-                                    className="mt-1"
-                                />
-                            </div>
+                    <form onSubmit={handleSubmit} className="space-y-6">
+                        <div>
+                            <Label htmlFor="name">Full Name *</Label>
+                            <Input
+                                id="name"
+                                type="text"
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                                placeholder="John Doe"
+                                required
+                                className="mt-1"
+                            />
+                        </div>
 
-                            {!otpSent ? (
-                                <Button
-                                    onClick={handleSendOTP}
-                                    disabled={otpLoading}
-                                    className="w-full"
-                                >
-                                    {otpLoading ? 'Sending...' : 'Send OTP'}
-                                </Button>
-                            ) : (
-                                <>
-                                    <div className="bg-accent/50 border border-accent px-4 py-3 rounded">
-                                        <p className="text-sm">
-                                            OTP has been sent to <strong>{email}</strong>. Please check your inbox.
-                                        </p>
-                                    </div>
-
-                                    <div>
-                                        <Label htmlFor="otp">Enter OTP</Label>
-                                        <Input
-                                            id="otp"
-                                            type="text"
-                                            value={otp}
-                                            onChange={(e) => setOtp(e.target.value.replace(/\D/g, '').slice(0, 6))}
-                                            placeholder="000000"
-                                            maxLength={6}
-                                            className="mt-1 text-center text-2xl tracking-widest"
-                                        />
-                                    </div>
-
-                                    <Button
-                                        onClick={handleVerifyOTP}
-                                        className="w-full"
-                                    >
-                                        Verify & Continue
-                                    </Button>
-
-                                    <Button
-                                        onClick={() => setOtpSent(false)}
-                                        variant="outline"
-                                        className="w-full"
-                                    >
-                                        Change Email
-                                    </Button>
-                                </>
+                        <div>
+                            <Label htmlFor="email">Email Address *</Label>
+                            <Input
+                                id="email"
+                                type="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                placeholder="your.email@example.com"
+                                required
+                                className="mt-1"
+                            />
+                            {institutionType === 'nit' && (
+                                <p className="text-xs text-muted-foreground mt-1">
+                                    For NIT Hamirpur, email must end with @nith.ac.in
+                                </p>
                             )}
                         </div>
-                    ) : (
-                        <form onSubmit={handleSubmit} className="space-y-6">
+
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
-                                <Label htmlFor="name">Full Name *</Label>
+                                <Label htmlFor="password">Password *</Label>
                                 <Input
-                                    id="name"
-                                    type="text"
-                                    value={name}
-                                    onChange={(e) => setName(e.target.value)}
-                                    placeholder="John Doe"
+                                    id="password"
+                                    type="password"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    placeholder="••••••••"
                                     required
                                     className="mt-1"
                                 />
                             </div>
-
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                <div>
-                                    <Label htmlFor="password">Password *</Label>
-                                    <Input
-                                        id="password"
-                                        type="password"
-                                        value={password}
-                                        onChange={(e) => setPassword(e.target.value)}
-                                        placeholder="••••••••"
-                                        required
-                                        className="mt-1"
-                                    />
-                                </div>
-                                <div>
-                                    <Label htmlFor="confirmPassword">Confirm Password *</Label>
-                                    <Input
-                                        id="confirmPassword"
-                                        type="password"
-                                        value={confirmPassword}
-                                        onChange={(e) => setConfirmPassword(e.target.value)}
-                                        placeholder="••••••••"
-                                        required
-                                        className="mt-1"
-                                    />
-                                </div>
-                            </div>
-
                             <div>
-                                <Label htmlFor="classYear">Class/Year *</Label>
-                                <Select value={classYear} onValueChange={setClassYear} required>
-                                    <SelectTrigger className="mt-1">
-                                        <SelectValue placeholder="Select your class/year" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        <SelectItem value="9th">9th Grade</SelectItem>
-                                        <SelectItem value="10th">10th Grade</SelectItem>
-                                        <SelectItem value="11th">11th Grade</SelectItem>
-                                        <SelectItem value="12th">12th Grade</SelectItem>
-                                        <SelectItem value="1st Year">1st Year (College)</SelectItem>
-                                        <SelectItem value="2nd Year">2nd Year (College)</SelectItem>
-                                        <SelectItem value="3rd Year">3rd Year (College)</SelectItem>
-                                        <SelectItem value="4th Year">4th Year (College)</SelectItem>
-                                    </SelectContent>
-                                </Select>
-                            </div>
-
-                            <div>
-                                <Label>Institution *</Label>
-                                <RadioGroup
-                                    value={institutionType}
-                                    onValueChange={(value) => setInstitutionType(value as 'nit' | 'other')}
-                                    className="mt-2"
-                                >
-                                    <div className="flex items-center space-x-2">
-                                        <RadioGroupItem value="nit" id="nit" />
-                                        <Label htmlFor="nit" className="font-normal cursor-pointer">
-                                            NIT Hamirpur
-                                        </Label>
-                                    </div>
-                                    <div className="flex items-center space-x-2">
-                                        <RadioGroupItem value="other" id="other" />
-                                        <Label htmlFor="other" className="font-normal cursor-pointer">
-                                            Other
-                                        </Label>
-                                    </div>
-                                </RadioGroup>
-
-                                {institutionType === 'other' && (
-                                    <Input
-                                        type="text"
-                                        value={otherInstitution}
-                                        onChange={(e) => setOtherInstitution(e.target.value)}
-                                        placeholder="Enter your institution name"
-                                        required
-                                        className="mt-2"
-                                    />
-                                )}
-                            </div>
-
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                <div>
-                                    <Label htmlFor="age">Age *</Label>
-                                    <Input
-                                        id="age"
-                                        type="number"
-                                        value={age}
-                                        onChange={(e) => setAge(e.target.value)}
-                                        placeholder="18"
-                                        min="10"
-                                        max="100"
-                                        required
-                                        className="mt-1"
-                                    />
-                                </div>
-                                <div>
-                                    <Label htmlFor="phoneNumber">Phone Number *</Label>
-                                    <Input
-                                        id="phoneNumber"
-                                        type="tel"
-                                        value={phoneNumber}
-                                        onChange={(e) => setPhoneNumber(e.target.value)}
-                                        placeholder="+91 9876543210"
-                                        required
-                                        className="mt-1"
-                                    />
-                                </div>
-                            </div>
-
-                            <div>
-                                <Label htmlFor="munExperience">MUN Experience (number of MUNs attended)</Label>
+                                <Label htmlFor="confirmPassword">Confirm Password *</Label>
                                 <Input
-                                    id="munExperience"
-                                    type="number"
-                                    value={munExperience}
-                                    onChange={(e) => setMunExperience(e.target.value)}
-                                    placeholder="0"
-                                    min="0"
+                                    id="confirmPassword"
+                                    type="password"
+                                    value={confirmPassword}
+                                    onChange={(e) => setConfirmPassword(e.target.value)}
+                                    placeholder="••••••••"
+                                    required
                                     className="mt-1"
                                 />
                             </div>
+                        </div>
 
-                            <div className="flex gap-4">
-                                <Button
-                                    type="button"
-                                    variant="outline"
-                                    onClick={() => setStep(1)}
-                                    className="flex-1"
-                                >
-                                    Back
-                                </Button>
-                                <Button
-                                    type="submit"
-                                    disabled={loading}
-                                    className="flex-1"
-                                >
-                                    {loading ? 'Registering...' : 'Complete Registration'}
-                                </Button>
+                        <div>
+                            <Label htmlFor="classYear">Class/Year *</Label>
+                            <Select value={classYear} onValueChange={setClassYear} required>
+                                <SelectTrigger className="mt-1">
+                                    <SelectValue placeholder="Select your class/year" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="9th">9th Grade</SelectItem>
+                                    <SelectItem value="10th">10th Grade</SelectItem>
+                                    <SelectItem value="11th">11th Grade</SelectItem>
+                                    <SelectItem value="12th">12th Grade</SelectItem>
+                                    <SelectItem value="1st Year">1st Year (College)</SelectItem>
+                                    <SelectItem value="2nd Year">2nd Year (College)</SelectItem>
+                                    <SelectItem value="3rd Year">3rd Year (College)</SelectItem>
+                                    <SelectItem value="4th Year">4th Year (College)</SelectItem>
+                                </SelectContent>
+                            </Select>
+                        </div>
+
+                        <div>
+                            <Label>Institution *</Label>
+                            <RadioGroup
+                                value={institutionType}
+                                onValueChange={(value) => setInstitutionType(value as 'nit' | 'other')}
+                                className="mt-2"
+                            >
+                                <div className="flex items-center space-x-2">
+                                    <RadioGroupItem value="nit" id="nit" />
+                                    <Label htmlFor="nit" className="font-normal cursor-pointer">
+                                        NIT Hamirpur
+                                    </Label>
+                                </div>
+                                <div className="flex items-center space-x-2">
+                                    <RadioGroupItem value="other" id="other" />
+                                    <Label htmlFor="other" className="font-normal cursor-pointer">
+                                        Other
+                                    </Label>
+                                </div>
+                            </RadioGroup>
+
+                            {institutionType === 'other' && (
+                                <Input
+                                    type="text"
+                                    value={otherInstitution}
+                                    onChange={(e) => setOtherInstitution(e.target.value)}
+                                    placeholder="Enter your institution name"
+                                    required
+                                    className="mt-2"
+                                />
+                            )}
+                        </div>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <Label htmlFor="age">Age *</Label>
+                                <Input
+                                    id="age"
+                                    type="number"
+                                    value={age}
+                                    onChange={(e) => setAge(e.target.value)}
+                                    placeholder="18"
+                                    min="10"
+                                    max="100"
+                                    required
+                                    className="mt-1"
+                                />
                             </div>
-                        </form>
-                    )}
+                            <div>
+                                <Label htmlFor="phoneNumber">Phone Number *</Label>
+                                <Input
+                                    id="phoneNumber"
+                                    type="tel"
+                                    value={phoneNumber}
+                                    onChange={(e) => setPhoneNumber(e.target.value)}
+                                    placeholder="+91 9876543210"
+                                    required
+                                    className="mt-1"
+                                />
+                            </div>
+                        </div>
+
+                        <div>
+                            <Label htmlFor="munExperience">MUN Experience (number of MUNs attended)</Label>
+                            <Input
+                                id="munExperience"
+                                type="number"
+                                value={munExperience}
+                                onChange={(e) => setMunExperience(e.target.value)}
+                                placeholder="0"
+                                min="0"
+                                className="mt-1"
+                            />
+                        </div>
+
+                        <Button
+                            type="button"
+                            onClick={handleSendOTP}
+                            disabled={otpLoading || otpSent || loading}
+                            className="w-full"
+                        >
+                            {otpLoading ? 'Sending OTP...' : loading ? 'Registering...' : otpSent ? 'OTP Sent - Check Your Email' : 'Send OTP'}
+                        </Button>
+                    </form>
 
                     <div className="mt-6 text-center text-sm">
                         Already have an account?{' '}
@@ -377,6 +349,59 @@ export default function RegisterPage() {
                     </div>
                 </div>
             </div>
+
+            {/* OTP Dialog */}
+            <Dialog open={showOtpDialog} onOpenChange={setShowOtpDialog}>
+                <DialogContent>
+                    <DialogHeader>
+                        <DialogTitle>Enter OTP</DialogTitle>
+                        <DialogDescription>
+                            We've sent a 6-digit OTP to <strong>{email}</strong>. Please enter it below.
+                        </DialogDescription>
+                    </DialogHeader>
+
+                    <div className="space-y-4 py-4">
+                        <div>
+                            <Label htmlFor="otp">OTP</Label>
+                            <Input
+                                id="otp"
+                                type="text"
+                                value={otp}
+                                onChange={(e) => setOtp(e.target.value.replace(/\D/g, '').slice(0, 6))}
+                                placeholder="000000"
+                                maxLength={6}
+                                className="mt-1 text-center text-2xl tracking-widest"
+                            />
+                        </div>
+
+                        {error && (
+                            <div className="bg-destructive/10 border border-destructive text-destructive px-4 py-3 rounded text-sm">
+                                {error}
+                            </div>
+                        )}
+
+                        <div className="flex gap-3">
+                            <Button
+                                type="button"
+                                variant="outline"
+                                onClick={() => setShowOtpDialog(false)}
+                                disabled={loading}
+                                className="flex-1"
+                            >
+                                Cancel
+                            </Button>
+                            <Button
+                                type="button"
+                                onClick={handleVerifyOTP}
+                                disabled={loading}
+                                className="flex-1"
+                            >
+                                {loading ? 'Verifying & Registering...' : 'Verify OTP'}
+                            </Button>
+                        </div>
+                    </div>
+                </DialogContent>
+            </Dialog>
 
             <Footer />
         </main>
