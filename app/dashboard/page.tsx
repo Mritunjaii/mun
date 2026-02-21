@@ -752,7 +752,7 @@ export default function DashboardPage() {
                                 </div>
                                 <div className="flex flex-col items-center">
                                     <img
-                                        src="https://res.cloudinary.com/diozumpxo/image/upload/v1771101115/WhatsApp_Image_2026-02-15_at_01.37.26_xxl5ce.jpg"
+                                        src="https://res.cloudinary.com/diozumpxo/image/upload/v1771658838/unnamed_yzxwy1.jpg"
                                         alt="Payment QR Code"
                                         className="w-64 h-64 object-contain border border-border rounded"
                                     />
