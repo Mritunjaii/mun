@@ -27,26 +27,34 @@ export default function RegistrationPage() {
             {/* Breaking News Banner */}
             <div className="mb-6 sm:mb-8 pb-6 sm:pb-8 border-b-4 border-foreground">
               <p className="font-serif text-xs sm:text-sm font-bold text-muted-foreground uppercase tracking-widest mb-2">
-                Breaking News
+                Important Notice
               </p>
               <h2 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-primary mb-4">
-                OPEN SOON
+                CLOSED
               </h2>
               <div className="flex justify-center gap-2 mt-4">
-                <div className="w-2 h-2 bg-accent rounded-full animate-pulse"></div>
-                <div className="w-2 h-2 bg-accent rounded-full animate-pulse delay-100"></div>
-                <div className="w-2 h-2 bg-accent rounded-full animate-pulse delay-200"></div>
+                <div className="w-2 h-2 bg-destructive rounded-full animate-pulse"></div>
+                <div className="w-2 h-2 bg-destructive rounded-full animate-pulse delay-100"></div>
+                <div className="w-2 h-2 bg-destructive rounded-full animate-pulse delay-200"></div>
               </div>
             </div>
 
             {/* Message */}
             <div className="space-y-4 sm:space-y-6">
-              <p className="font-serif text-lg sm:text-xl md:text-2xl text-foreground leading-relaxed">
-                Registration details, fees, and deadlines are being finalized.
+              <p className="font-serif text-lg sm:text-xl md:text-2xl text-foreground leading-relaxed font-bold">
+                Delegate registration has officially closed.
               </p>
-              <p className="font-serif text-base sm:text-lg text-muted-foreground italic">
-                The registration portal will open soon. Stay tuned for official announcements regarding delegate registration.
+              <p className="font-serif text-base sm:text-lg text-muted-foreground">
+                We have reached our maximum seat capacity for all committees. Thank you to everyone who registered!
               </p>
+              <div className="pt-4">
+                <a
+                  href="/register"
+                  className="inline-flex items-center gap-2 font-serif font-bold py-3 px-6 border-2 border-foreground bg-foreground text-background hover:bg-background hover:text-primary transition-all duration-300 text-sm uppercase"
+                >
+                  View Details & Contact Info
+                </a>
+              </div>
             </div>
 
             {/* Decorative Element */}

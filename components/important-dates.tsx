@@ -2,37 +2,37 @@ export function ImportantDates() {
   const dates = [
     {
       event: 'Secretariat Application',
-      date: 'February 1-4, 2025',
+      date: 'February 1-4, 2026',
       description: 'Application period for prospective members of the SYGNET MUN Secretariat and organizational team.'
     },
     {
       event: 'Secretariat Interview',
-      date: 'February 6, 2025',
+      date: 'February 6, 2026',
       description: 'Interviews for secretariat candidates to finalize the organizing committee.'
     },
     {
       event: 'MUN Workshop',
-      date: 'February 15, 2025',
+      date: 'February 15, 2026',
       description: 'Preparatory workshop for delegates covering MUN procedures, parliamentary rules, and best practices.'
     },
     {
       event: 'MUN Registrations Open',
-      date: 'February 15, 2025',
+      date: 'February 15, 2026',
       description: 'Official registration window opens for all delegates, press corps, and committee chairs.'
     },
     {
       event: 'MUN Registration Deadline',
-      date: 'March 14, 2025',
+      date: 'March 14, 2026',
       description: 'Final deadline to complete registration and secure your place at SYGNET MUN.'
     },
     {
       event: 'Background Guide Release',
-      date: 'March 16, 2025',
+      date: 'March 16, 2026',
       description: 'Comprehensive background guides for all committees released to registered delegates.'
     },
     {
       event: 'SYGNET MUN Conference',
-      date: 'March 20-22, 2025',
+      date: 'March 20-22, 2026',
       description: 'The maiden conference - three days of intensive diplomatic simulation and international debate at NIT Hamirpur.'
     }
   ]

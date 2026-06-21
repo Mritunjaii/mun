@@ -80,7 +80,7 @@ export function Footer() {
             Published by CSOC, Society of Civil Engineering, National Institute of Technology Hamirpur
           </p>
           <p className="font-serif text-xs text-center text-card/70">
-            "Voices That Shape Tomorrow" — Maiden Edition, 2025
+            "Voices That Shape Tomorrow" — Maiden Edition, 2026
           </p>
           <p className="font-serif text-xs text-center text-card/70">Designed & Developed by <a href="https://www.linkedin.com/in/mritunjai-gupta/" className="text-card hover:text-accent transition-colors">Mritunjai Gupta</a></p>
         </div>
@@ -99,7 +99,7 @@ export function Footer() {
             </a> */}
           </div>
           <p className="font-serif text-xs text-card/70 text-center md:text-right">
-            © 2025 CSOC, NIT Hamirpur. All rights reserved.
+            © 2026 CSOC, NIT Hamirpur. All rights reserved.
           </p>
         </div>
       </div>

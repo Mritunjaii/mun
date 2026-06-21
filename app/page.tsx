@@ -8,6 +8,7 @@ import { SecretaryGeneral } from '@/components/secretary-general'
 import { CommitteesSection } from '@/components/committees-section'
 import { WhyParticipate } from '@/components/why-participate'
 import { ImportantDates } from '@/components/important-dates'
+import { SygnetGlimpse } from '@/components/sygnet-glimpse'
 import { Footer } from '@/components/footer'
 
 export default function Page() {
@@ -15,6 +16,7 @@ export default function Page() {
     <main className="min-h-screen bg-background text-foreground">
       <Navigation />
       <Hero />
+      <SygnetGlimpse />
       <WhatIsMUN />
       <AboutSYGNET />
       <SecretaryGeneral />

@@ -186,7 +186,7 @@ export default function CommitteesPage() {
             Ready to Join a Committee?
           </h2>
           <p className="text-muted-foreground mb-8">
-            Register now and select your preferred committee for SYGNET MUN
+            Registration Closed and select your preferred committee for SYGNET MUN
           </p>
           <Button
             onClick={handleRegisterClick}

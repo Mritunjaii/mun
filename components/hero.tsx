@@ -54,6 +54,8 @@ export function Hero() {
           </p>
           <p className="text-xs sm:text-sm font-serif text-muted-foreground">
             Maiden Edition
+            <br />
+            March 20-22, 2026
           </p>
         </div>
 
@@ -74,14 +76,14 @@ export function Hero() {
           <div className="w-1 h-6 sm:h-8 bg-primary"></div>
         </div>
 
-        {/* Register Now Button */}
+        {/* Registration Closed Button */}
         <div className="flex justify-center mt-8 sm:mt-10">
           <Button
             onClick={handleRegisterClick}
             size="lg"
             className="font-serif text-base sm:text-lg px-8 sm:px-12 py-4 sm:py-6 bg-accent hover:bg-accent/90 text-accent-foreground shadow-lg hover:shadow-xl transition-all duration-300"
           >
-            Register Now
+            Registration Closed
           </Button>
         </div>
       </div>
