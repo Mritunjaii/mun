@@ -74,7 +74,7 @@ export default function SecretariatPage() {
                   key={num}
                   className="border-2 border-foreground bg-card p-3 hover:shadow-xl transition-all duration-300 flex flex-col group"
                 >
-                  <div className="relative aspect-[3/4] w-full overflow-hidden border border-foreground/15 bg-background">
+                  <div className="relative aspect-[4/5] w-full overflow-hidden border border-foreground/15 bg-background">
                     <Image
                       src={`/${num}.webp`}
                       alt={`${member.name} - ${member.role}`}
